@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { EXECUTIX_MCP_TOOLS, handleMcpToolInvocation } from '@/lib/mcpServer';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   return NextResponse.json({
     jsonrpc: "2.0",

@@ -5,23 +5,21 @@ interface LogoProps {
   className?: string;
 }
 
-export default function Logo({ className = "w-8 h-8" }: LogoProps) {
+export default function Logo({ className = "w-6 h-6" }: LogoProps) {
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="flex items-center justify-center shrink-0">
       <svg 
+        width="24"
+        height="24"
         className={className} 
-        viewBox="0 0 36 36" 
+        viewBox="0 0 24 24" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect width="36" height="36" rx="10" fill="#047857" />
-        {/* Executix Core Lightning Bolt & Node Ring */}
+        <rect width="24" height="24" rx="6" fill="#0F172A" />
         <path 
-          d="M20 7L11 20H17L15 29L24 16H18L20 7Z" 
-          fill="#FFFFFF"
-          stroke="#34D399"
-          strokeWidth="1.2"
-          strokeLinejoin="round"
+          d="M13 5L7 14H12L11 19L17 10H12L13 5Z" 
+          fill="#FFFFFF" 
         />
       </svg>
     </div>
