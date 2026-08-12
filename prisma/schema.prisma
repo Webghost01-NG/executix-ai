@@ -1,0 +1,57 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  EXECUTED
+  FAILED
+  REJECTED_BY_GUARDRAIL
+}
+
+enum ProtocolType {
+  X402_PAYMENT
+  MPP_MICROPAYMENT
+  KEEPERHUB_ENCLAVE
+}
+
+model AgentJob {
+  id              String         @id @default(uuid())
+  title           String
+  framework       String         // ElizaOS, OpenClaw, Hermes, LangChain
+  protocol        ProtocolType   @default(X402_PAYMENT)
+  status          JobStatus      @default(PENDING)
+  targetAddress   String
+  amountEth       String
+  intentPrompt    String
+  txHash          String?
+  network         String         @default("Ethereum Sepolia")
+  retryCount      Int            @default(0)
+  errorMessage    String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  executionLogs   ExecutionLog[]
+}
+
+model ExecutionLog {
+  id          String   @id @default(uuid())
+  jobId       String
+  job         AgentJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  stepName    String
+  status      String   // PASS, FAIL, SKIPPED
+  detail      String
+  timestamp   DateTime @default(now())
+}
+
+model UserWallet {
+  address     String   @id
+  network     String   @default("Ethereum Sepolia")
+  balance     String   @default("0 ETH")
+  lastConnected DateTime @default(now())
+}
